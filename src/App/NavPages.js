@@ -7,7 +7,8 @@ const Nav = styled.nav({
     flexDirection: 'column',
     height: '100%',
     '.new-page': {
-        marginTop: 'auto'
+        marginTop: 'auto',
+        height: '50px'
     }
 })
 
@@ -17,9 +18,7 @@ function NavPages({ pages, newPage, profile }){
             <TitlePage name={`${profile.name}'s Notion`} icon={profile.icon} />
 
             <div>
-                { pages.map( 
-                    (el, ind) => <TitlePage key={ind} name={el.name} icon={el.icon} />
-                )}
+                { pages.map( (el, ind) => <TitlePage key={ind} name={el.name} icon={el.icon} />)}
             </div>
 
             <div className="new-page" onClick={newPage}>+ New Page</div>
