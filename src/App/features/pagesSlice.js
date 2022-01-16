@@ -10,7 +10,11 @@ const pagesSlice = createSlice({
     reducers: {
         addPage: state => {
             state.root.push({name:'outra'})
-        }
+        },
+        renamePage: (state, payload) => {
+            const { id, name } = payload;
+            state.root[id].name = name;
+        },
     }
 })
 

@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
 import TitlePage from './components/TitlePage'
 
+import { useSelector } from 'react-redux'
+import { selectPage } from './features/pagesSlice'
+
 const Page = styled.section({
-    backgroundColor: '#444444',
+    backgroundColor: '#2F3437',
     display: 'grid',
     gridTemplateRows: '50px auto',
     main:{
@@ -17,7 +20,9 @@ const Page = styled.section({
     }
 })
 
-function Main({ page }){
+function Main({ currentPage }){
+    const page = useSelector(selectPage(currentPage));
+
     return (
         <Page>
             <TitlePage icon={page.icon} name={page.name}/>

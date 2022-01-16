@@ -1,41 +1,26 @@
+import { useState } from 'react'
 import styled from '@emotion/styled'
+
 import NavPages from './NavPages'
 import Page from './Page'
-
-import { useState } from 'react'
-
-
-import { useDispatch, useSelector } from 'react-redux'
-import { addPage, selectPage, selectAllPages } from './features/pagesSlice'
-
-
-const STORE2 = {
-    profile: {
-        name: 'Talison',
-        icon: 'https://avatars.githubusercontent.com/u/54823205?v=4'
-    }
-}
-
-// const NewPage = (name) => STORE.Pages.push({ icon: '', body:[], name: (name ? name: '') });
 
 const App  = styled.div({
     width: '100%',
     height: '100vh',
     display: 'grid',
-    gridTemplateColumns: '25% auto',
-    backgroundColor: '#AAAAAA'
+    gridTemplateColumns: '240px auto',
+    backgroundColor: '#373C3F'
 })
 
-function Index(props) {
-    const [currentPage, setCurrentPage] = useState();
-    const dispatch = useDispatch();
-
-    const PAGES = useSelector(selectAllPages)
+function Index() {
+    // O unico dado armazenado como state do componente é o id da pagina atual, 
+    //  os dados e texto nela são guardados na store do Redux
+    const [currentPage, setCurrentPage] = useState(0);
 
     return (
         <App className="App">
-            <NavPages profile={STORE2.profile} pages={PAGES} newPage={() => dispatch(addPage())} />
-            <Page page={PAGES} />
+            <NavPages setPage={setCurrentPage} currentPage={currentPage} />
+            <Page currentPage={currentPage} />
         </App>
     );
 }
