@@ -13,6 +13,9 @@ function TitlePage(props){
         gap: '5px',
         img: {
             borderRadius: '5px'
+        },
+        '&:hover': {
+            backgroundColor: '#5D6265'
         }
     })
 
@@ -26,7 +29,7 @@ function TitlePage(props){
     return (
         <Div { ...props } >
             <Icon />
-            {name}
+            {name || <em>empty...</em> }
         </Div>
     )
 }

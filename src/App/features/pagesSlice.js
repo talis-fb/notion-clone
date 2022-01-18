@@ -9,10 +9,10 @@ const pagesSlice = createSlice({
     },
     reducers: {
         addPage: state => {
-            state.root.push({name:'outra'})
+            state.root.push({name:''})
         },
         renamePage: (state, payload) => {
-            const { id, name } = payload;
+            const { id, name } = payload.payload;
             state.root[id].name = name;
         },
     }
@@ -27,5 +27,5 @@ const selectAllPages = state => state.pages.root;
 // const getIconUser = state => state.profile.icon
 
 export { selectPage, selectAllPages }
-export const { addPage } = pagesSlice.actions;
+export const { addPage, renamePage } = pagesSlice.actions;
 export default pagesSlice.reducer;

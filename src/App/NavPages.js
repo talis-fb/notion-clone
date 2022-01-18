@@ -2,7 +2,7 @@ import TitlePage from './components/TitlePage'
 import styled from '@emotion/styled'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addPage, selectPage, selectAllPages } from './features/pagesSlice'
+import { addPage, selectPage, selectAllPages, renamePage } from './features/pagesSlice'
 import { selectName, selectUser } from './features/userProfileSlice'
 
 const Nav = styled.nav({
@@ -45,17 +45,24 @@ function NavPages({ currentPage, setPage }){
 
     const dispatch = useDispatch();
     const newPage = () => dispatch(addPage());
+    const renameAPage = (id, name) => dispatch(renamePage(id, name));
 
     const ListPages = (el, ind) => {
         const active = ind===currentPage;
         const click = () => setPage(ind);
         const classes = 'pages '.concat(active ? 'active' : '');
-        return <TitlePage onClick={click} key={ind} name={el.name} icon={el.icon} className={classes} />
+        return (
+            <div>
+                <TitlePage onClick={click} key={ind} name={el.name} icon={el.icon} className={classes} />
+            </div>
+        )
     }
 
     return (
         <Nav>
+            <div>
             <TitlePage name={`${profile.name}'s Notion`} icon={profile.icon} />
+            </div>
 
             <div>
                 {pages.map(ListPages)}
