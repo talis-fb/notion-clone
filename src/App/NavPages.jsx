@@ -1,76 +1,85 @@
-import TitlePage from './components/TitlePage'
-import styled from '@emotion/styled'
+import TitlePage from "./components/TitlePage";
+import styled from "@emotion/styled";
 
-import { useDispatch, useSelector } from 'react-redux'
-import { addPage, selectPage, selectAllPages, renamePage } from './features/pagesSlice'
-import { selectName, selectUser } from './features/userProfileSlice'
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addPage,
+  selectPage,
+  selectAllPages,
+  renamePage,
+} from "./store/features/pagesSlice";
+import { selectName, selectUser } from "./store/features/userProfileSlice";
 
 const Nav = styled.nav({
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-    height: '100%',
-    color: '#A2A4A6',
-    img:{
-        color: '#A2A4A6',
+  display: "flex",
+  justifyContent: "flex-start",
+  flexDirection: "column",
+  height: "100%",
+  color: "#A2A4A6",
+  img: {
+    color: "#A2A4A6",
+  },
+  ".new-page": {
+    display: "flex",
+    alignItems: "center",
+    marginTop: "auto",
+    height: "50px",
+    borderTop: "1px solid #5D626577",
+    padding: "3px",
+    "&:hover": {
+      backgroundColor: "#5D6265",
     },
-    '.new-page': {
-        display: 'flex',
-        alignItems: 'center',
-        marginTop: 'auto',
-        height: '50px',
-        borderTop: '1px solid #5D626577',
-        padding: '3px',
-        '&:hover': {
-            backgroundColor: '#5D6265'
-        },
+  },
+  ".pages": {
+    borderRadius: "0",
+    transition: "0.03s",
+    "&:hover": {
+      backgroundColor: "#5D6265",
     },
-    '.pages': {
-        borderRadius: '0',
-        transition: '0.03s',
-        '&:hover': {
-            backgroundColor: '#5D6265'
-        },
-    },
-    '.active': {
-        backgroundColor: '#5D6265'
-    }
-})
+  },
+  ".active": {
+    backgroundColor: "#5D6265",
+  },
+});
 
+function NavPages({ currentPage, setPage }) {
+  const profile = useSelector(selectUser);
+  const pages = useSelector(selectAllPages);
 
+  const dispatch = useDispatch();
+  const newPage = () => dispatch(addPage());
+  const renameAPage = (id, name) => dispatch(renamePage(id, name));
 
-function NavPages({ currentPage, setPage }){
-    const profile = useSelector(selectUser);
-    const pages = useSelector(selectAllPages);
-
-    const dispatch = useDispatch();
-    const newPage = () => dispatch(addPage());
-    const renameAPage = (id, name) => dispatch(renamePage(id, name));
-
-    const ListPages = (el, ind) => {
-        const active = ind===currentPage;
-        const click = () => setPage(ind);
-        const classes = 'pages '.concat(active ? 'active' : '');
-        return (
-            <div>
-                <TitlePage onClick={click} key={ind} name={el.name} icon={el.icon} className={classes} />
-            </div>
-        )
-    }
-
+  const ListPages = (el, ind) => {
+    const active = ind === currentPage;
+    const click = () => setPage(ind);
+    const classes = "pages ".concat(active ? "active" : "");
     return (
-        <Nav>
-            <div>
-            <TitlePage name={`${profile.name}'s Notion`} icon={profile.icon} />
-            </div>
+      <div>
+        <TitlePage
+          onClick={click}
+          key={ind}
+          name={el.name}
+          icon={el.icon}
+          className={classes}
+        />
+      </div>
+    );
+  };
 
-            <div>
-                {pages.map(ListPages)}
-            </div>
+  return (
+    <Nav>
+      <div>
+        <TitlePage name={`${profile.name}'s Notion`} icon={profile.icon} />
+      </div>
 
-            <div className="new-page" onClick={newPage}>+ New Page</div>
-        </Nav>
-    )
+      <div>{pages.map(ListPages)}</div>
+
+      <div className="new-page" onClick={newPage}>
+        + New Page
+      </div>
+    </Nav>
+  );
 }
 
 export default NavPages;
